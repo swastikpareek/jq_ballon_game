@@ -1,0 +1,47 @@
+<html>
+<head>
+  <title>Fucking Awesome Thing</title>
+</head>
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/jquery-ui.js"></script>
+<script type="text/javascript" src="scripts/script.js"></script>
+<link rel="stylesheet" href="styles/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="styles/style.css"/>
+<body>
+  <div class="initial-screen">
+    <div class="table">
+      <h2> Create New Game </h2>
+      <label class="label">Complexity Level </label>
+      <div class="form-container-complexity">
+        <div class="form-item">
+          <input class="radio-button" type="radio" name="complexity" value="easy" checked>
+          <label>Easy</label>
+        </div>
+        <div class="form-item">
+          <input class="radio-button" type="radio" name="complexity" value="normal">
+          <label>Normal</label>
+        </div>
+        <div class="form-item">
+          <input class="radio-button" type="radio" name="complexity" value="expert">
+          <label>Expert</label>
+        </div>
+      </div>
+      <div class="form-container">
+        <div class="form-item">
+          <label class="label"> Diameter : <span class="diameter-reading" > 50 </span></label>
+          <div id="diameter-slider" class="jq-slider" style="width:260px; margin:15px;"></div>
+        </div>
+      </div>
+      <div class="form-container">
+        <div class="form-item">
+          <label class="label"> Max Item at a time on screen : <span class="item-reading" > 10 </span></label>
+          <div id="item-slider" class="jq-slider" style="width:260px; margin:15px;"></div>
+        </div>
+      </div>
+      <div class="form-action"><button class="action">Start New Game</button></div>
+    </div>
+  </div>
+  <div id="score">Score: <br/> <span class="computed_score"> 0 </div></div>
+</div>
+</body>
+</html>
