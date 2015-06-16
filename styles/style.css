@@ -1,4 +1,10 @@
-.ball{
+body{
+  margin: 0 !important;
+}
+.hidden{
+  display: none !important;
+}
+.ball{ /* Styling for balloon */
   background: black;
   -webkit-border-radius : 100%;
   border-radius: 100%;
@@ -7,15 +13,9 @@
   left: 100px;
   display: block;
   cursor: pointer;
+
 }
-.small{
-  width: 40px;
-  height: 40px;
-}
-body{
-  margin: 0 !important;
-}
-#score{
+#score{ /* Styling the top right live score card */
   border: 2px solid black;
   top: 0;
   right: 0;
@@ -37,7 +37,7 @@ body{
   }
 }
 
-.bomb{
+.bomb{ /* Styling bombs */
   background : url(../img/bomb.png) top left no-repeat;
   background-size: cover;
   position: fixed;
@@ -47,6 +47,7 @@ body{
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-direction: alternate;
 }
+/* Styling for initial and final screen */
 .initial-screen,
 .final-score-screen{
   position: fixed;
@@ -96,6 +97,4 @@ body{
   display: block;
   margin: 0 auto;
 }
-.hidden{
-  display: none !important;
-}
+

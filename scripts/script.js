@@ -1,9 +1,8 @@
 (function() {
-  var initialize_game = false;
-  var marks_factor = 5;
-  var max_limit_items = 40;
-  var max_diameter = 90;
-  var diameter = 50,
+  var marks_factor = 5; // Marks multiplying factor
+  var max_limit_items = 40; // Max limit for items to render on page
+  var max_diameter = 90; // Max limit for balloon diameter
+  var diameter = 50, // Setting up deafult value
     max_items = 10,
     probability = 80,
     max_speed_limit = 10,
@@ -50,6 +49,8 @@
 
     var updatePosition = function($obj, direction, speed) {
       var down_direc, up_direc, left_direc, right_direc, speedUnit;
+      // Setting up the local variables for setting up the left right directions
+      // Splitting up the variables to smaller ones to enhance the code readbility
       if (direction === 'top-left') {
         down_direc = false;
         up_direc = true;
@@ -76,73 +77,75 @@
         right_direc = false;
         left_direc = true;
       }
+      // Having conditioning and massaging the speed varible to have sensible speed
       speedUnit = speed / 10;
+      // Setting up the boundaries for rebound effect
       var max_bottom_limit = $(window).height() - $obj.height();
       var max_left_limit = $(window).width() - $obj.width();
 
-      var init_left = $obj.offset().left;
+      var init_left = $obj.offset().left; // Getting the current position of the div element
       var init_top = $obj.offset().top;
-      setInterval(function() {
+      setInterval(function() { // Main logic
         $obj.css({
-          top: init_top,
+          top: init_top, // Updating the position of the div element (starts from the second iteration)
           left: init_left,
         });
-        if (down_direc) {
+        if (down_direc) { // If the ball vertical movement is down
           if (init_top < max_bottom_limit) {
-            init_top = init_top + speedUnit;
-            if (init_top >= max_bottom_limit) {
-              init_top = max_bottom_limit;
+            init_top = init_top + speedUnit; // Update the top position
+            if (init_top >= max_bottom_limit) { // If the element bottom position exceeds the max lower boundary limit
+              init_top = max_bottom_limit; //set the element position to the max bottom boundary limit
             }
           }
-          if (init_top === max_bottom_limit) {
-            down_direc = false;
+          if (init_top === max_bottom_limit) { // If the element has reached to the bottom of the page update the direction variables.
+            down_direc = false; // Direction to top
             up_direc = true;
           }
         }
-        if (up_direc) {
+        if (up_direc) { // If the ball vertical movement is up
           if (init_top > 0) {
-            init_top = init_top - speedUnit;
-            if (init_top <= 0) {
-              init_top = 0;
+            init_top = init_top - speedUnit; // Update the top position
+            if (init_top <= 0) { // If the element bottom position exceeds the max upper boundary limit
+              init_top = 0; //set the element position to the upper max boundary limit
             }
           }
-          if (init_top === 0) {
-            down_direc = true;
+          if (init_top === 0) { // If the element has reached to the bottom of the page update the direction variables.
+            down_direc = true; // Direction to bottom
             up_direc = false;
           }
         }
-        if (right_direc) {
+        if (right_direc) { // If the ball horizontal movement is right
           if (init_left < max_left_limit) {
-            init_left = init_left + speedUnit;
-            if (init_left >= max_left_limit) {
-              init_left = max_left_limit;
+            init_left = init_left + speedUnit; // Update the left position
+            if (init_left >= max_left_limit) { // If the element left position exceeds the max right boundary limit
+              init_left = max_left_limit; //set the element position to the max right boundary limit
             }
           }
-          if (init_left === max_left_limit) {
-            right_direc = false;
+          if (init_left === max_left_limit) { // If the element has reached to the bottom of the page update the direction variables.
+            right_direc = false; // Direction to left
             left_direc = true;
           }
         }
-        if (left_direc) {
+        if (left_direc) { // If the ball horizontal movement is left
           if (init_left > 0) {
-            init_left = init_left - speedUnit;
-            if (init_left <= 0) {
-              init_left = 0;
+            init_left = init_left - speedUnit; // Update the left position
+            if (init_left <= 0) { // If the element left position exceeds the max left boundary limit
+              init_left = 0; //set the element position to the max left boundary limit
             }
           }
           if (init_left === 0) {
-            right_direc = true;
+            right_direc = true; // Direction to right
             left_direc = false;
           }
         }
-      }, 1);
+      }, 1); // Updating the position on every ms
     };
 
-    function getRandomNumber(min, max) {
+    function getRandomNumber(min, max) { // To generate random speed between between max and min rage of speed for the created balloons
       return Math.floor(Math.random() * (max - min) + min);
     }
 
-    function getRandomDirection() {
+    function getRandomDirection() { // To generate random direction for the created balloons
       var decidingUnit = Math.floor(Math.random() * 100) % 4;
       if (decidingUnit === 0) {
         return 'top-left';
@@ -160,18 +163,31 @@
       var $newObj;
       var speed = getRandomNumber(min_speed_limit, max_speed_limit);
       if (getRandomNumber(0, 100) < probability) {
-        $newObj = $('<div class="ball gravity-enabled small" style=" width : ' + diameter + 'px; height: ' + diameter + 'px; top : ' + top + ' ; left : ' + left + '; background-color : rgb(' + getRandomNumber(0, 255) + ', ' + getRandomNumber(0, 255) + ' ,' + getRandomNumber(0, 255) + ');" data-speed="' + speed + '"></div>');
+        $newObj = $('<div>', {
+          class: 'ball gravity-enabled',
+          style: 'width : ' + diameter + 'px; height: ' + diameter + 'px; top : ' + top + 'px ; left : ' + left + 'px; background-color : rgb(' + getRandomNumber(0, 255) + ', ' + getRandomNumber(0, 255) + ' ,' + getRandomNumber(0, 255) + ');',
+          'data-speed': speed
+        });
       } else {
         if ($('.bomb').length < Math.floor(max_items / 5)) {
-          $newObj = $('<div class="bomb gravity-enabled small" style="width : ' + diameter + 'px; height: ' + diameter + 'px; top : ' + top + ' ; left : ' + left + ';" data-speed="' + speed + '"></div>');
+          $newObj = $('<div>', {
+            class: 'bomb gravity-enabled',
+            style: 'width : ' + diameter + 'px; height: ' + diameter + 'px; top : ' + top + 'px ; left : ' + left + 'px',
+            'data-speed': speed
+          });
         } else {
-          $newObj = $('<div class="ball gravity-enabled small" style="width : ' + diameter + 'px; height: ' + diameter + 'px; top : ' + top + ' ; left : ' + left + '; background-color : rgb(' + getRandomNumber(0, 255) + ', ' + getRandomNumber(0, 255) + ' ,' + getRandomNumber(0, 255) + ');" data-speed="' + speed + '"></div>');
+          $newObj = $('<div>', {
+            class: 'ball gravity-enabled',
+            style: 'width : ' + diameter + 'px; height: ' + diameter + 'px; top : ' + top + 'px ; left : ' + left + 'px; background-color : rgb(' + getRandomNumber(0, 255) + ', ' + getRandomNumber(0, 255) + ' ,' + getRandomNumber(0, 255) + ');',
+            'data-speed': speed
+          });
+
         }
       }
       $('body').append($newObj);
       updatePosition($newObj, getRandomDirection(), speed);
     };
-    var generateContiniousItems = function(interval, limit) {
+    var generateContiniousItems = function(interval, limit) { // This will be called when user hits start new gane button
       for (i = 0; i < 7; i++) {
         createItems();
       } // initial Boost
@@ -181,20 +197,6 @@
         }
       }, interval);
     };
-    // $('.ball').each(function() {
-    //   var left = getRandomNumber(0, $(window).width() - diameter);
-    //   var top = getRandomNumber(0, $(window).height() - diameter);
-    //   var speed = getRandomNumber(min_speed_limit, max_speed_limit);
-    //   $(this).css({
-    //     'background-color': 'rgb(' + getRandomNumber(0, 255) + ', ' + getRandomNumber(0, 255) + ' ,' + getRandomNumber(0, 255) + ')',
-    //     'top': top + 'px',
-    //     'left': left + 'px',
-    //     'width': diameter + 'px',
-    //     'height': diameter + 'px',
-    //   });
-    //   $(this).attr('data-speed', speed);
-    //   updatePosition($(this), getRandomDirection(), speed);
-    // });
   });
   $(document).on('click', '.ball', function() {
     $(this).fadeOut(100);
@@ -205,6 +207,7 @@
   $(document).on('click', '.bomb', function() {
     $(this).fadeOut(100);
     var marks = $('.computed_score').text();
-    $('body').append('<div class="final-score-screen"><div class="table"><div class="table-cell"><div>Your Score is : ' + marks + '</div><div class="new_game"><button onclick="location.reload()">New Game </button></div></div></div></div>');
+    $('.score-board').html(marks);
+    $('.final-score-screen').removeClass('hidden');
   });
 })(jQuery);

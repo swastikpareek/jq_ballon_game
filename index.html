@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Fucking Awesome Thing</title>
+  <title>Balloon Burst</title>
 </head>
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
@@ -10,9 +11,11 @@
 <body>
   <div class="initial-screen">
     <div class="table">
-      <h2> Create New Game </h2>
-      <label class="label">Complexity Level </label>
+      <h2> Balloon Burst
+      </h2>
+      <small> Burst the colourful ballons but beware of the bombs </small>
       <div class="form-container-complexity">
+        <label class="label">Complexity Level </label>
         <div class="form-item">
           <input class="radio-button" type="radio" name="complexity" value="easy" checked>
           <label>Easy</label>
@@ -34,14 +37,16 @@
       </div>
       <div class="form-container">
         <div class="form-item">
-          <label class="label"> Max Item at a time on screen : <span class="item-reading" > 10 </span></label>
+          <label class="label"> Max Item on screen : <span class="item-reading" > 10 </span></label>
           <div id="item-slider" class="jq-slider" style="width:260px; margin:15px;"></div>
         </div>
       </div>
       <div class="form-action"><button class="action">Start New Game</button></div>
     </div>
   </div>
-  <div id="score">Score: <br/> <span class="computed_score"> 0 </div></div>
-</div>
+  <div class="final-score-screen hidden"><div class="table"><div class="table-cell"><div>Your Score is : <span class="score-board"></span></div><div class="new_game"><button onclick="location.reload()">New Game </button></div></div></div></div>
+  <div id="score">Score: <br/>
+    <span class="computed_score"> 0 </span>
+  </div>
 </body>
 </html>
